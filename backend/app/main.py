@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from app.database.init_db import init_db
+from app.api import password_reset
 
 app = FastAPI(
     title="Discord Clone API",
@@ -11,6 +12,8 @@ app = FastAPI(
 @app.on_event("startup")
 async def startup_event():
     init_db()
+
+app.include_router(password_reset.router)
 
 @app.get("/")
 async def root():
